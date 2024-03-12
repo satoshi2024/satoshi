@@ -14,7 +14,7 @@ public class MvcConfigEmp  implements WebMvcConfigurer {
 
         //viewController 请求路径    viewName: 跳转视图
     	// 跳转到员工管理画面
-    	registry.addViewController("/manageEmp").setViewName("redirect:/student/lists");
+    	registry.addViewController("/manageEmp").setViewName("redirect:/student/lists2");
         // 增加员工
         registry.addViewController("employee/addEmp").setViewName("emp/addEmp");
 

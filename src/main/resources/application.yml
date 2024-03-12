@@ -34,3 +34,9 @@ photo:
   file:
 #    dir: /Users/user/Documents/file/photo
     dir: C:\work\file\photo
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

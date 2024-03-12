@@ -6,10 +6,13 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.baizhi.constant.MessageConstant;
 import com.baizhi.entity.original.Student;
 import com.baizhi.service.StudentService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,7 +46,7 @@ public class StudentContoller {
 		studentService.update(student);
 		String editCheckitemSuccess = MessageConstant.EDIT_CHECKITEM_SUCCESS;
 		log.debug(editCheckitemSuccess);
-		return "redirect:/student/lists";
+		return "redirect:/student/lists2";
 		
 	}
 	//添加学生
@@ -58,7 +61,7 @@ public class StudentContoller {
 		studentService.insert(student);
 		String addStudentSuccess = MessageConstant.ADD_STUDENT_SUCCESS;
 		log.debug(addStudentSuccess);
-		return "redirect:/student/lists";
+		return "redirect:/student/lists2";
 		
 	}
 	//根据id删除学生
@@ -69,7 +72,7 @@ public class StudentContoller {
 		log.debug(deleteCheckitemSuccess,id);
 		
 		
-		return "redirect:/student/lists";
+		return "redirect:/student/lists2";
 		
 	}
 	//查询所有学生
@@ -80,6 +83,35 @@ public class StudentContoller {
 		List<Student> list = studentService.lists();
 		model.addAttribute("objLst",list);
 		return "emp/stulist";
+		
+	}
+	@RequestMapping("lists2")
+	public String getList(Model model,@RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
+            @RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {
+		//为了程序的严谨性，判断非空：
+	    if(pageNum == null){
+	        pageNum = 1;   //设置默认当前页
+	    }
+	    if(pageNum <= 0){
+	        pageNum = 1;
+	    }
+	    if(pageSize == null){
+	        pageSize = 5;    //设置默认每页显示的数据数
+	    }
+	    System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);			    
+	        //int list = studentService.list(null);
+	        //System.out.println("数据为"+list);
+	    	PageHelper.startPage(1, 10);
+	    	List<Student> lists = studentService.lists();
+	        System.out.println("分页数据："+lists);
+	        //3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>        
+	        PageInfo<Student> pageInfo = new PageInfo<Student>(lists,pageSize);
+	        
+	        //4.使用model/map/modelandview等带回前端
+	        model.addAttribute("pageInfo",pageInfo);
+	    
+	    	    
+		return "emp/stulist2";
 		
 	}
 }
