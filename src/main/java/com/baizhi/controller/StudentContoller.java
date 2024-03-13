@@ -23,6 +23,7 @@ public class StudentContoller {
 	
 	private StudentService studentService;
 	
+	
 	public StudentContoller(StudentService studentService) {
 		this.studentService=studentService;
 	}
@@ -85,9 +86,10 @@ public class StudentContoller {
 		return "emp/stulist";
 		
 	}
+	//分页查询
 	@RequestMapping("lists2")
 	public String getList(Model model,@RequestParam(required = false,defaultValue="1",value="pageNum")Integer pageNum,
-            @RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {
+			@RequestParam(defaultValue="5",value="pageSize")Integer pageSize) {
 		//为了程序的严谨性，判断非空：
 	    if(pageNum == null){
 	        pageNum = 1;   //设置默认当前页
@@ -98,20 +100,41 @@ public class StudentContoller {
 	    if(pageSize == null){
 	        pageSize = 5;    //设置默认每页显示的数据数
 	    }
-	    System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);			    
-	        //int list = studentService.list(null);
-	        //System.out.println("数据为"+list);
-	    	PageHelper.startPage(1, 10);
-	    	List<Student> lists = studentService.lists();
-	        System.out.println("分页数据："+lists);
-	        //3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>        
-	        PageInfo<Student> pageInfo = new PageInfo<Student>(lists,pageSize);
-	        
-	        //4.使用model/map/modelandview等带回前端
-	        model.addAttribute("pageInfo",pageInfo);
-	    
+	    	System.out.println("当前页是："+pageNum+"显示条数是："+pageSize);			    
+	    	PageHelper.startPage(pageNum, pageSize);
+	    	try {
+		    	List<Student> lists = studentService.lists();
+		        //3.使用PageInfo包装查询后的结果,5是连续显示的条数,结果list类型是Page<E>        
+		        PageInfo<Student> pageInfo = new PageInfo<>(lists,pageSize); 
+		        //4.使用model/map/modelandview等带回前端
+		        model.addAttribute("pageInfo",pageInfo);
+		    	 }finally {
+		    	        PageHelper.clearPage(); //清理 ThreadLocal 存储的分页参数,保证线程安全
+		    	    }
 	    	    
 		return "emp/stulist2";
 		
 	}
+	
+	//搜索功能
+	@RequestMapping("lists3")
+	public String getSearch(Model model,String string) {
+		
+		List<Student> search = studentService.getSearch(string);
+		String queryStudentSuccess = MessageConstant.QUERY_STUDENT_SUCCESS;
+		log.debug(queryStudentSuccess);
+		System.out.println(search);
+		for (Student string1:search) {
+			model.addAttribute("pageInfo",search);
+			return "redirect:/student/lists2";
+		}
+		
+		
+		
+		
+		return "redirect:/student/lists2";
+		
+		
+	}
+	
 }

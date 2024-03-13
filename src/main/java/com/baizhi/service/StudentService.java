@@ -15,4 +15,9 @@ public interface StudentService {
 		Student selectId(Integer id);
 		//更新学生
 		void update(Student student);
+		//分页查询
+		//搜索功能
+		List<Student> getSearch(String string);
+		
+		
 }

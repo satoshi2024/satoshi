@@ -21,7 +21,11 @@ spring:
 mybatis:
   mapper-locations: classpath:com/baizhi/mapper/*.xml
   type-aliases-package: com.baizhi.entity
-
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 # 日志配置
 logging:
   level:
@@ -35,8 +39,3 @@ photo:
 #    dir: /Users/user/Documents/file/photo
     dir: C:\work\file\photo
 
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql

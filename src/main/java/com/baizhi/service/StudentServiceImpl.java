@@ -8,12 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.baizhi.dao.original.StudentMapper;
 import com.baizhi.entity.original.Student;
+import com.baizhi.entity.original.StudentExample;
+import com.baizhi.entity.original.StudentExample.Criteria;
 
 @Service
 @Transactional
 public class StudentServiceImpl implements StudentService{
 
 	private StudentMapper studentMapper;
+	
 	
 	@Autowired
 	public StudentServiceImpl(StudentMapper studentMapper){
@@ -70,6 +73,26 @@ public class StudentServiceImpl implements StudentService{
 		// TODO 自動生成されたメソッド・スタブ
 		studentMapper.updateByPrimaryKeySelective(student);
 	}
+
+
+
+
+
+	@Override
+	public List<Student> getSearch(String string) {
+		// TODO 自動生成されたメソッド・スタブ
+		StudentExample studentExample = new StudentExample();
+		Criteria criteria = studentExample.createCriteria();
+		criteria.andStudentNameLike(string);
+		
+		return studentMapper.selectByExample(studentExample);
+	}
+
+
+
+
+
+
 
 
 
