@@ -99,7 +99,19 @@
 			<version>3.0.2</version>
 			<scope>test</scope>
 		</dependency>
+		<!--引入jquery-webjar-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.3.1</version>
+		</dependency>
 
+		<!--引入bootstrap-->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>4.0.0</version>
+		</dependency>	
 		<!--引入工具类-->
 		<dependency>
             <groupId>com.github.pagehelper</groupId>

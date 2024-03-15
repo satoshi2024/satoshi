@@ -15,8 +15,8 @@ public class MvcConfig  implements WebMvcConfigurer {
     	// 首页跳转
     	registry.addViewController("/").setViewName("redirect:/login");
     	
-    	// 菜单画面
-    	registry.addViewController("/menu").setViewName("menu");
+    	// 菜单画面menu
+    	registry.addViewController("/menu").setViewName("dashboard");
 
     	// 画面登陆
         registry.addViewController("login").setViewName("login");

@@ -37,4 +37,6 @@ public class MvcConfigEmp  implements WebMvcConfigurer {
         registry.addViewController("employee05/addEmp").setViewName("emp05/addEmp");
 
     }
+    
+
 }

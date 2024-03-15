@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.baizhi.constant.MessageConstant;
 import com.baizhi.entity.original.Student;
+import com.baizhi.entity.vo.StudentVo;
 import com.baizhi.service.StudentService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -118,21 +120,22 @@ public class StudentContoller {
 	
 	//搜索功能
 	@RequestMapping("lists3")
-	public String getSearch(Model model,String string) {
+	public String getSearch(Model model,StudentVo sVo,String string,HttpSession session) {
 		
 		List<Student> search = studentService.getSearch(string);
+		sVo.setLst(search);
 		String queryStudentSuccess = MessageConstant.QUERY_STUDENT_SUCCESS;
-		log.debug(queryStudentSuccess);
-		System.out.println(search);
-		for (Student string1:search) {
-			model.addAttribute("pageInfo",search);
-			return "redirect:/student/lists2";
-		}
+		log.debug(queryStudentSuccess);	
+		
+		model.addAttribute("pageInfo",sVo);
+		session.setAttribute("pageInfo",sVo);
+		return "redirect:/emp/stulist2";
 		
 		
 		
 		
-		return "redirect:/student/lists2";
+		
+		
 		
 		
 	}

@@ -22,7 +22,7 @@ public class MvcConfigInterceptor implements WebMvcConfigurer {
 		registry.addInterceptor(new MyInterceptor())
 				.addPathPatterns("/**")//添加拦截的请求路径
 				.excludePathPatterns("/login", "user/regist")
-				.excludePathPatterns("/js/**","/css/**","/files/**","/img/**"
+				.excludePathPatterns("/js/**","/css/**","/files/**","/img/**","/static/**","/asserts/**"
 						, "file:"+upload
 						)
 				;//添加排除那些请求路径不经过拦截器

@@ -83,8 +83,8 @@ public class StudentServiceImpl implements StudentService{
 		// TODO 自動生成されたメソッド・スタブ
 		StudentExample studentExample = new StudentExample();
 		Criteria criteria = studentExample.createCriteria();
-		criteria.andStudentNameLike(string);
 		
+		criteria.andStudentNameLike(string);
 		return studentMapper.selectByExample(studentExample);
 	}
 
